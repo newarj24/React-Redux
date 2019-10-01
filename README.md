@@ -1,4 +1,4 @@
-# React and Redux Application
+# React-Redux Application
 
 1. **Install Node Packages.** - `npm install`
 2. **Install [React developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en) and [Redux Dev Tools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en)** in Chrome.
