@@ -1,15 +1,20 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Homepage from './home/Homepage';
 import Aboutpage from './about/Aboutpage';
 import Header from './common/Header';
+import PageNotFound from './PageNotFound';
+import CoursesPage from './courses/CoursesPage';
 
 const App = () => (
-    <div className="container-fluid">
+    <div className="container-fluid text-center">
         <Header />
-        
-        <Route path = "/about" component = {Aboutpage} />
-        <Route path = "/" component = {Homepage} />
+        <Switch>
+            <Route exact path = "/" component = {Homepage} />
+            <Route path = "/about" component = {Aboutpage} />
+            <Route path = "/courses" component = {CoursesPage} />
+            <Route component = {PageNotFound} />
+        </Switch>
     </div>
 );
 
