@@ -12,8 +12,8 @@ const CourseForm = ({
   errors = {}
 }) => {
   return (
-    <form onSubmit={onSave}>
-      <h2>{course.id ? "Edit" : "Add"} Course</h2>
+    <form className="col-md-4 mx-auto text-left" onSubmit={onSave}>
+      <h2 className="text-center">{course.id ? "Edit" : "Add"} Course</h2>
       {errors.onSave && (
         <div className="alert alert-danger" role="alert">
           {errors.onSave}
@@ -48,7 +48,11 @@ const CourseForm = ({
         error={errors.category}
       />
 
-      <button type="submit" disabled={saving} className="btn btn-primary">
+      <button
+        type="submit"
+        disabled={saving}
+        className="btn btn-primary text-center"
+      >
         {saving ? "Saving..." : "Save"}
       </button>
     </form>
