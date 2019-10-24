@@ -1,5 +1,7 @@
 import React from "react";
 import CourseList from "./CourseList";
+import { Link } from "react-router-dom";
+import Spinner from "../common/Spinner";
 
 import propTypes from "prop-types";
 
@@ -28,7 +30,16 @@ class CoursesPage extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <CourseList courses={this.props.courses} />
+        {this.props.loading ? (
+          <Spinner />
+        ) : (
+          <>
+            <Link to="course" className="btn btn-primary mb-5">
+              Add Course
+            </Link>
+            <CourseList courses={this.props.courses} />
+          </>
+        )}
       </React.Fragment>
     );
   }
@@ -48,7 +59,8 @@ function mapStateToProps(state) {
               ).name
             };
           }),
-    authors: state.authors
+    authors: state.authors,
+    loading: state.apiCallsInProgess > 0
   };
 }
 
@@ -83,7 +95,8 @@ function mapDispatchToProps(dispatch) {
 CoursesPage.propTypes = {
   courses: propTypes.array.isRequired,
   authors: propTypes.array.isRequired,
-  action: propTypes.object.isRequired
+  action: propTypes.object.isRequired,
+  loading: propTypes.bool.isRequired
 };
 
 export default connect(

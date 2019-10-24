@@ -8,6 +8,8 @@ import { loadAuthors } from "../../redux/actions/authorActions";
 
 import CourseForm from "./CourseForm";
 import { newCourse } from "../../../tools/mockData";
+import Spinner from "../common/Spinner";
+import { toast } from "react-toastify";
 
 function ManageCoursePage({
   courses,
@@ -23,6 +25,7 @@ function ManageCoursePage({
   // We can solve this by tweaking useEffect
   const [course, setCourse] = useState({ ...props.course });
   const [errors, setErrors] = useState({});
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     if (courses.length === 0) {
@@ -52,18 +55,29 @@ function ManageCoursePage({
 
   function handleSave(event) {
     event.preventDefault();
-    saveCourse(course).then(() => {
-      history.push("/courses");
-    }); // saveCourse is this.props.saveCourse getting from function argument not the imported one.
+    setSaving(true);
+    saveCourse(course)
+      .then(() => {
+        toast.success("Course Saved");
+        history.push("/courses");
+      })
+      .catch(error => {
+        setSaving(false);
+        setErrors({ onSave: error.message }); // Server Side validation - onSave because in CourseForm component, it will look for errors.onSave
+      }); // saveCourse is this.props.saveCourse getting from function argument not the imported one.
   }
 
-  return (
+  // Loading needs to finish before
+  return courses.length === 0 || authors.length === 0 ? (
+    <Spinner />
+  ) : (
     <CourseForm
       course={course}
       errors={errors}
       authors={authors}
       onChange={handleChange}
       onSave={handleSave}
+      saving={saving}
     />
   );
 }

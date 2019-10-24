@@ -1,15 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import Spinner from "../common/Spinner";
 
 const CourseList = ({ courses, onDeleteClick }) => (
   <React.Fragment>
-    <Link to="course" className="btn btn-primary mb-5">
-      Add Course
-    </Link>
-
-    <Spinner />
     <table className="table">
       <thead>
         <tr>
