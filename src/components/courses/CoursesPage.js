@@ -1,5 +1,7 @@
 import React from "react";
 import CourseList from "./CourseList";
+import { Link } from "react-router-dom";
+import Spinner from "../common/Spinner";
 
 import propTypes from "prop-types";
 
@@ -7,6 +9,7 @@ import { connect } from "react-redux";
 import * as courseAction from "../../redux/actions/courseActions";
 import * as authorAction from "../../redux/actions/authorActions";
 import { bindActionCreators } from "redux";
+import { toast } from "react-toastify";
 
 class CoursesPage extends React.Component {
   componentDidMount() {
@@ -25,10 +28,29 @@ class CoursesPage extends React.Component {
     }
   }
 
+  handleDeleteCourse = course => {
+    toast.success("Course Deleted");
+    this.props.action.deleteCourse(course).catch(error => {
+      toast.error("Delete Failed." + error.message, { autoClose: false });
+    });
+  };
+
   render() {
     return (
       <React.Fragment>
-        <CourseList courses={this.props.courses} />
+        {this.props.loading ? (
+          <Spinner />
+        ) : (
+          <>
+            <Link to="course" className="btn btn-primary mb-5">
+              Add Course
+            </Link>
+            <CourseList
+              courses={this.props.courses}
+              onDeleteClick={this.handleDeleteCourse}
+            />
+          </>
+        )}
       </React.Fragment>
     );
   }
@@ -48,7 +70,8 @@ function mapStateToProps(state) {
               ).name
             };
           }),
-    authors: state.authors
+    authors: state.authors,
+    loading: state.apiCallsInProgess > 0
   };
 }
 
@@ -75,7 +98,8 @@ function mapDispatchToProps(dispatch) {
   return {
     action: {
       loadCourses: bindActionCreators(courseAction.loadCourses, dispatch),
-      loadAuthors: bindActionCreators(authorAction.loadAuthors, dispatch)
+      loadAuthors: bindActionCreators(authorAction.loadAuthors, dispatch),
+      deleteCourse: bindActionCreators(courseAction.deleteCourse, dispatch)
     }
   };
 }
@@ -83,7 +107,8 @@ function mapDispatchToProps(dispatch) {
 CoursesPage.propTypes = {
   courses: propTypes.array.isRequired,
   authors: propTypes.array.isRequired,
-  action: propTypes.object.isRequired
+  action: propTypes.object.isRequired,
+  loading: propTypes.bool.isRequired
 };
 
 export default connect(
