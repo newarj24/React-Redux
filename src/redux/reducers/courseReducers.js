@@ -11,6 +11,9 @@ export default function courseReducers(state = initialState.courses, action) {
       );
     case types.LOAD_COURSES_SUCCESS:
       return action.courses;
+    case types.DELETE_COURSE_OPTIMISTIC:
+      // filter returns new array, So need not to worry about mutating state
+      return state.filter(course => course.id !== action.course.id);
     default:
       return state;
   }
