@@ -1,15 +1,15 @@
-import React from "react";
-import CourseList from "./CourseList";
-import { Link } from "react-router-dom";
-import Spinner from "../common/Spinner";
+import React from 'react';
+import CourseList from './CourseList';
+import { Link } from 'react-router-dom';
+import Spinner from '../common/Spinner';
 
-import propTypes from "prop-types";
+import propTypes from 'prop-types';
 
-import { connect } from "react-redux";
-import * as courseAction from "../../redux/actions/courseActions";
-import * as authorAction from "../../redux/actions/authorActions";
-import { bindActionCreators } from "redux";
-import { toast } from "react-toastify";
+import { connect } from 'react-redux';
+import * as courseAction from '../../redux/actions/courseActions';
+import * as authorAction from '../../redux/actions/authorActions';
+import { bindActionCreators } from 'redux';
+import { toast } from 'react-toastify';
 
 class CoursesPage extends React.Component {
   componentDidMount() {
@@ -17,21 +17,21 @@ class CoursesPage extends React.Component {
 
     if (courses.length === 0) {
       action.loadCourses().catch(error => {
-        alert("Loading course failed!!", error);
+        alert('Loading course failed!!', error);
       });
     }
 
     if (authors.length === 0) {
       action.loadAuthors().catch(error => {
-        alert("Loading Authors failed!!", error);
+        alert('Loading Authors failed!!', error);
       });
     }
   }
 
   handleDeleteCourse = course => {
-    toast.success("Course Deleted");
+    toast.success('Course Deleted');
     this.props.action.deleteCourse(course).catch(error => {
-      toast.error("Delete Failed." + error.message, { autoClose: false });
+      toast.error('Delete Failed.' + error.message, { autoClose: false });
     });
   };
 
@@ -42,7 +42,7 @@ class CoursesPage extends React.Component {
           <Spinner />
         ) : (
           <>
-            <Link to="course" className="btn btn-primary mb-5">
+            <Link to='course' className='btn btn-primary mb-5 mt-2'>
               Add Course
             </Link>
             <CourseList
@@ -111,7 +111,4 @@ CoursesPage.propTypes = {
   loading: propTypes.bool.isRequired
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CoursesPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);

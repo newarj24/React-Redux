@@ -1,14 +1,35 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 const Header = () => {
-    return (
-        <nav>
-            <NavLink to = "/" exact >Home</NavLink> { " | " }
-            <NavLink to = "/courses">Courses</NavLink> { " | " }
-            <NavLink to = "/about" >About</NavLink> 
-        </nav>
-    );
-}
+  return (
+    <nav className='navbar navbar-expand navbar-dark bg-primary'>
+      <div className='container-fluid'>
+        <div className='navbar-header'>
+          <Link to='/' className='navbar-brand'>
+            Pluralsight Admin
+          </Link>
+        </div>
+        <ul className='navbar-nav mr-auto'>
+          <li className='nav-item'>
+            <NavLink className='nav-link' to='/' exact>
+              Home
+            </NavLink>
+          </li>
+          <li className='nav-item'>
+            <NavLink className='nav-link' to='/courses'>
+              Courses
+            </NavLink>
+          </li>
+          <li className='nav-item'>
+            <NavLink className='nav-link' to='/about'>
+              About
+            </NavLink>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  );
+};
 
 export default Header;
