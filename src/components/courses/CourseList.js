@@ -1,10 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 const CourseList = ({ courses, onDeleteClick }) => (
   <React.Fragment>
-    <table className="table">
+    <div>
+      <button className='course-count btn mr-4 mb-3 float-right'>
+        <strong>{courses.length}</strong>{' '}
+        {courses.length > 1 ? 'Courses' : 'Course'}
+      </button>
+    </div>
+    <table className='table'>
       <thead>
         <tr>
           <th />
@@ -20,20 +26,20 @@ const CourseList = ({ courses, onDeleteClick }) => (
             <tr key={course.id}>
               <td>
                 <a
-                  className="btn btn-light"
-                  href={"http://pluralsight.com/courses/" + course.slug}
+                  className='btn btn-light'
+                  href={'http://pluralsight.com/courses/' + course.slug}
                 >
                   Watch
                 </a>
               </td>
               <td>
-                <Link to={"/course/" + course.slug}>{course.title}</Link>
+                <Link to={'/course/' + course.slug}>{course.title}</Link>
               </td>
               <td>{course.authorName}</td>
               <td>{course.category}</td>
               <td>
                 <button
-                  className="btn btn-outline-danger"
+                  className='btn btn-outline-danger'
                   onClick={() => onDeleteClick(course)}
                 >
                   Delete

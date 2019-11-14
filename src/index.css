@@ -1,7 +1,13 @@
 nav {
-    padding: 20px 0 20px 0;
+  padding: 20px 0 20px 0;
 }
 
 nav .active {
-    color : #f15b2a;
+  color: #f15b2a;
+}
+
+.course-count {
+  color: #004085;
+  background-color: #cce5ff;
+  border-color: #b8daff;
 }
