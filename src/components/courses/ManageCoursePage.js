@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import propTypes from "prop-types";
+import propTypes from 'prop-types';
 
-import { connect } from "react-redux";
-import { loadCourses, saveCourse } from "../../redux/actions/courseActions";
-import { loadAuthors } from "../../redux/actions/authorActions";
+import { connect } from 'react-redux';
+import { loadCourses, saveCourse } from '../../redux/actions/courseActions';
+import { loadAuthors } from '../../redux/actions/authorActions';
 
-import CourseForm from "./CourseForm";
-import { newCourse } from "../../../tools/mockData";
-import Spinner from "../common/Spinner";
-import { toast } from "react-toastify";
+import CourseForm from './CourseForm';
+import { newCourse } from '../../../tools/mockData';
+import Spinner from '../common/Spinner';
+import { toast } from 'react-toastify';
 
 function ManageCoursePage({
   courses,
@@ -18,6 +18,7 @@ function ManageCoursePage({
   loadAuthors,
   saveCourse,
   history,
+  loading,
   ...props
 }) {
   // Above line will create an issue : formfield will not populate the result after the reloading the edit course
@@ -30,7 +31,7 @@ function ManageCoursePage({
   useEffect(() => {
     if (courses.length === 0) {
       loadCourses().catch(error => {
-        alert("Loading courses failed!!", error);
+        alert('Loading courses failed!!', error);
       });
     } else {
       setCourse({
@@ -40,7 +41,7 @@ function ManageCoursePage({
 
     if (authors.length === 0) {
       loadAuthors().catch(error => {
-        alert("Loading authors failed!!", error);
+        alert('Loading authors failed!!', error);
       });
     }
   }, [props.course]);
@@ -49,9 +50,9 @@ function ManageCoursePage({
     const { title, authorId, category } = course;
     const errors = {};
 
-    if (!title) errors.title = "Title is required.";
-    if (!authorId) errors.authorId = "AuthorId is required.";
-    if (!category) errors.category = "Category is required.";
+    if (!title) errors.title = 'Title is required.';
+    if (!authorId) errors.authorId = 'AuthorId is required.';
+    if (!category) errors.category = 'Category is required.';
 
     setErrors(errors);
 
@@ -62,7 +63,7 @@ function ManageCoursePage({
     const { name, value } = event.target;
     setCourse(prevCourse => ({
       ...prevCourse,
-      [name]: name === "authorId" ? parseInt(value, 10) : value
+      [name]: name === 'authorId' ? parseInt(value, 10) : value
     }));
   }
 
@@ -72,8 +73,8 @@ function ManageCoursePage({
     setSaving(true);
     saveCourse(course)
       .then(() => {
-        toast.success("Course Saved");
-        history.push("/courses");
+        toast.success('Course Saved');
+        history.push('/courses');
       })
       .catch(error => {
         setSaving(false);
@@ -82,7 +83,7 @@ function ManageCoursePage({
   }
 
   // Loading needs to finish before
-  return courses.length === 0 || authors.length === 0 ? (
+  return loading ? (
     <Spinner />
   ) : (
     <CourseForm
@@ -110,7 +111,8 @@ function mapStateToProps(state, ownProps) {
   return {
     course,
     courses: state.courses,
-    authors: state.authors
+    authors: state.authors,
+    loading: state.apiCallsInProgess > 0
   };
 }
 
@@ -127,10 +129,8 @@ ManageCoursePage.propTypes = {
   loadCourses: propTypes.func.isRequired,
   loadAuthors: propTypes.func.isRequired,
   saveCourse: propTypes.func.isRequired,
-  history: propTypes.object.isRequired
+  history: propTypes.object.isRequired,
+  loading: propTypes.bool.isRequired
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ManageCoursePage);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);

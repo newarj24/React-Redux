@@ -2,6 +2,7 @@ import React from 'react';
 import CourseList from './CourseList';
 import { Link } from 'react-router-dom';
 import Spinner from '../common/Spinner';
+import EmptyCoursePage from './EmptyCoursePage';
 
 import propTypes from 'prop-types';
 
@@ -45,10 +46,14 @@ class CoursesPage extends React.Component {
             <Link to='course' className='btn btn-primary mb-5 mt-2'>
               Add Course
             </Link>
-            <CourseList
-              courses={this.props.courses}
-              onDeleteClick={this.handleDeleteCourse}
-            />
+            {this.props.courses.length != 0 ? (
+              <CourseList
+                courses={this.props.courses}
+                onDeleteClick={this.handleDeleteCourse}
+              />
+            ) : (
+              <EmptyCoursePage />
+            )}
           </>
         )}
       </React.Fragment>
