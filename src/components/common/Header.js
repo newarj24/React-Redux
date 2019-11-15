@@ -27,6 +27,13 @@ const Header = () => {
             </NavLink>
           </li>
         </ul>
+        <ul className='navbar-nav navbar-right'>
+          <li className='nav-item'>
+            <NavLink className='nav-link' to='/authors'>
+              Author Details
+            </NavLink>
+          </li>
+        </ul>
       </div>
     </nav>
   );
