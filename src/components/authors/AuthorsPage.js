@@ -17,11 +17,13 @@ function AuthorsPage({ authors, action, loading }) {
       action.loadAuthors().catch(error => {
         alert('Loading authors Failed!!' + error);
       });
+    } else {
+      setAuthors(authors);
     }
   }, [authors]);
 
   function handleAuthorDelete(author) {
-    const newAuthor = authors.filter(
+    const newAuthor = authorList.filter(
       authorDetail => authorDetail.id != author.id
     );
 
@@ -33,7 +35,7 @@ function AuthorsPage({ authors, action, loading }) {
   return loading ? (
     <Spinner />
   ) : (
-    <AuthorsList authors={authors} handleAuthorDelete={handleAuthorDelete} />
+    <AuthorsList authors={authorList} handleAuthorDelete={handleAuthorDelete} />
   );
 }
 
@@ -60,4 +62,7 @@ AuthorsPage.propTypes = {
   loading: propTypes.bool.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthorsPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AuthorsPage);
