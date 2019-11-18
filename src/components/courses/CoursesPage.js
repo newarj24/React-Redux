@@ -61,20 +61,36 @@ class CoursesPage extends React.Component {
   }
 }
 
+function sortCourses(courses) {
+  courses.sort(function(a, b) {
+    if (a.title < b.title) {
+      return -1;
+    }
+    if (a.title > b.title) {
+      return 1;
+    }
+    return 0;
+  });
+}
+
 function mapStateToProps(state) {
   // This 'courses' property is derived from Root Reducer
+  const courses =
+    state.authors.length === 0 // author and courses data fetched in Asynchronous way
+      ? []
+      : state.courses.map(course => {
+          return {
+            ...course,
+            authorName: state.authors.find(
+              author => author.id === course.authorId
+            ).name
+          };
+        });
+
+  if (courses.length > 0) sortCourses(courses);
+
   return {
-    courses:
-      state.authors.length === 0 // author and courses data fetched in Asynchronous way
-        ? []
-        : state.courses.map(course => {
-            return {
-              ...course,
-              authorName: state.authors.find(
-                author => author.id === course.authorId
-              ).name
-            };
-          }),
+    courses,
     authors: state.authors,
     loading: state.apiCallsInProgess > 0
   };
