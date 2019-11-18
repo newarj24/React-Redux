@@ -5,7 +5,6 @@ import propTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { loadCourses, saveCourse } from '../../redux/actions/courseActions';
 import { loadAuthors } from '../../redux/actions/authorActions';
-import PageNotFound from '../PageNotFound';
 
 import CourseForm from './CourseForm';
 import { newCourse } from '../../../tools/mockData';
@@ -20,7 +19,6 @@ function ManageCoursePage({
   saveCourse,
   history,
   loading,
-  displayCourse,
   ...props
 }) {
   // Above line will create an issue : formfield will not populate the result after the reloading the edit course
@@ -88,20 +86,14 @@ function ManageCoursePage({
   return loading ? (
     <Spinner />
   ) : (
-    <>
-      {displayCourse ? (
-        <CourseForm
-          course={course}
-          errors={errors}
-          authors={authors}
-          onChange={handleChange}
-          onSave={handleSave}
-          saving={saving}
-        />
-      ) : (
-        <PageNotFound />
-      )}
-    </>
+    <CourseForm
+      course={course}
+      errors={errors}
+      authors={authors}
+      onChange={handleChange}
+      onSave={handleSave}
+      saving={saving}
+    />
   );
 }
 
@@ -111,20 +103,13 @@ export function getCourseBySlug(courses, slug) {
 
 function mapStateToProps(state, ownProps) {
   const slug = ownProps.match.params.slug;
-  let displayCourse;
-
   const course =
     slug && state.courses.length > 0
       ? getCourseBySlug(state.courses, slug)
       : newCourse;
 
-  if (slug && state.courses.length > 0) {
-    displayCourse = getCourseBySlug(state.courses, slug) ? true : false;
-  }
-
   return {
     course,
-    displayCourse,
     courses: state.courses,
     authors: state.authors,
     loading: state.apiCallsInProgess > 0
@@ -145,8 +130,7 @@ ManageCoursePage.propTypes = {
   loadAuthors: propTypes.func.isRequired,
   saveCourse: propTypes.func.isRequired,
   history: propTypes.object.isRequired,
-  loading: propTypes.bool.isRequired,
-  displayCourse: propTypes.bool.isRequired
+  loading: propTypes.bool.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);
