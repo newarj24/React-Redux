@@ -33,7 +33,9 @@ function AuthorsPage({ authors, action, loading, courses }) {
   }, [authors]);
 
   function handleAuthorDelete(author) {
-    let isPerformDelete = courses.find(course => course.authorId == author.id);
+    let isPerformDelete = coursesList.find(
+      course => course.authorId == author.id
+    );
 
     if (!isPerformDelete) {
       const newAuthor = authorList.filter(
