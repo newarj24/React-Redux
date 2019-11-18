@@ -50,6 +50,7 @@ class CoursesPage extends React.Component {
               <CourseList
                 courses={this.props.courses}
                 onDeleteClick={this.handleDeleteCourse}
+                sortCourses={this.props.sortCourses}
               />
             ) : (
               <EmptyCoursePage />
@@ -61,16 +62,32 @@ class CoursesPage extends React.Component {
   }
 }
 
-function sortCourses(courses) {
-  courses.sort(function(a, b) {
-    if (a.title < b.title) {
-      return -1;
+function sortCourses(courses, order) {
+  switch (order) {
+    case 'asc': {
+      courses.sort(function(a, b) {
+        if (a.title < b.title) {
+          return -1;
+        }
+        if (a.title > b.title) {
+          return 1;
+        }
+        return 0;
+      });
+      break;
     }
-    if (a.title > b.title) {
-      return 1;
+    case 'desc': {
+      courses.sort(function(a, b) {
+        if (a.title > b.title) {
+          return -1;
+        }
+        if (a.title < b.title) {
+          return 1;
+        }
+        return 0;
+      });
     }
-    return 0;
-  });
+  }
 }
 
 function mapStateToProps(state) {
@@ -87,10 +104,11 @@ function mapStateToProps(state) {
           };
         });
 
-  if (courses.length > 0) sortCourses(courses);
+  if (courses.length > 0) sortCourses(courses, 'asc');
 
   return {
     courses,
+    sortCourses,
     authors: state.authors,
     loading: state.apiCallsInProgess > 0
   };
