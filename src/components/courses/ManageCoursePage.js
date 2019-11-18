@@ -131,8 +131,7 @@ ManageCoursePage.propTypes = {
   loadAuthors: propTypes.func.isRequired,
   saveCourse: propTypes.func.isRequired,
   history: propTypes.object.isRequired,
-  loading: propTypes.bool.isRequired,
-  displayCourse: propTypes.bool.isRequired
+  loading: propTypes.bool.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageCoursePage);
