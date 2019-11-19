@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const CourseList = ({ courses, onDeleteClick, sortCourses }) => (
+const CourseList = ({ courses, onDeleteClick }) => (
   <React.Fragment>
     <div>
       <button className='course-count btn mr-4 mb-3 float-right'>
@@ -14,7 +14,7 @@ const CourseList = ({ courses, onDeleteClick, sortCourses }) => (
       <thead>
         <tr>
           <th />
-          <th onClick={() => sortCourses(courses, 'desc')}>Title</th>
+          <th>Title</th>
           <th>Author</th>
           <th>Category</th>
           <th />

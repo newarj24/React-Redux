@@ -50,7 +50,6 @@ class CoursesPage extends React.Component {
               <CourseList
                 courses={this.props.courses}
                 onDeleteClick={this.handleDeleteCourse}
-                sortCourses={this.props.sortCourses}
               />
             ) : (
               <EmptyCoursePage />
