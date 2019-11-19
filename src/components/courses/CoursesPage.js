@@ -3,6 +3,7 @@ import CourseList from './CourseList';
 import { Link } from 'react-router-dom';
 import Spinner from '../common/Spinner';
 import EmptyCoursePage from './EmptyCoursePage';
+import Pagination from '../common/Pagination';
 
 import propTypes from 'prop-types';
 
@@ -13,6 +14,13 @@ import { bindActionCreators } from 'redux';
 import { toast } from 'react-toastify';
 
 class CoursesPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      courseList: []
+    };
+  }
+
   componentDidMount() {
     const { courses, authors, action } = this.props;
 
@@ -47,10 +55,13 @@ class CoursesPage extends React.Component {
               Add Course
             </Link>
             {this.props.courses.length != 0 ? (
-              <CourseList
-                courses={this.props.courses}
-                onDeleteClick={this.handleDeleteCourse}
-              />
+              <>
+                <CourseList
+                  courses={this.props.courses}
+                  onDeleteClick={this.handleDeleteCourse}
+                />
+                <Pagination />
+              </>
             ) : (
               <EmptyCoursePage />
             )}
