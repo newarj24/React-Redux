@@ -3,7 +3,6 @@ import CourseList from './CourseList';
 import { Link } from 'react-router-dom';
 import Spinner from '../common/Spinner';
 import EmptyCoursePage from './EmptyCoursePage';
-import Pagination from '../common/Pagination';
 
 import propTypes from 'prop-types';
 
@@ -55,13 +54,10 @@ class CoursesPage extends React.Component {
               Add Course
             </Link>
             {this.props.courses.length != 0 ? (
-              <>
-                <CourseList
-                  courses={this.props.courses}
-                  onDeleteClick={this.handleDeleteCourse}
-                />
-                <Pagination />
-              </>
+              <CourseList
+                courses={this.props.courses}
+                onDeleteClick={this.handleDeleteCourse}
+              />
             ) : (
               <EmptyCoursePage />
             )}
