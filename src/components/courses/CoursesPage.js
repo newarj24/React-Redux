@@ -3,6 +3,7 @@ import CourseList from './CourseList';
 import { Link } from 'react-router-dom';
 import Spinner from '../common/Spinner';
 import EmptyCoursePage from './EmptyCoursePage';
+import Pagination from '../common/Pagination';
 
 import propTypes from 'prop-types';
 
@@ -16,7 +17,9 @@ class CoursesPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      courseList: []
+      courseList: [],
+      coursesPerPage: 5,
+      currentPage: 1
     };
   }
 
@@ -36,6 +39,12 @@ class CoursesPage extends React.Component {
     }
   }
 
+  handlePagination = currentPage => {
+    this.setState({
+      currentPage
+    });
+  };
+
   handleDeleteCourse = course => {
     toast.success('Course Deleted');
     this.props.action.deleteCourse(course).catch(error => {
@@ -44,20 +53,33 @@ class CoursesPage extends React.Component {
   };
 
   render() {
+    const { coursesPerPage, currentPage } = this.state;
+
     return (
       <React.Fragment>
         {this.props.loading ? (
           <Spinner />
         ) : (
           <>
-            <Link to='course' className='btn btn-primary mb-5 mt-2'>
+            <Link to="course" className="btn btn-primary mb-5 mt-2">
               Add Course
             </Link>
             {this.props.courses.length != 0 ? (
-              <CourseList
-                courses={this.props.courses}
-                onDeleteClick={this.handleDeleteCourse}
-              />
+              <React.Fragment>
+                <CourseList
+                  courses={this.props.courses}
+                  onDeleteClick={this.handleDeleteCourse}
+                  currentPage={currentPage}
+                  coursesPerPage={coursesPerPage}
+                />
+
+                <Pagination
+                  courseLength={this.props.courses.length}
+                  coursesPerPage={coursesPerPage}
+                  currentPage={currentPage}
+                  handlePagination={this.handlePagination}
+                />
+              </React.Fragment>
             ) : (
               <EmptyCoursePage />
             )}
