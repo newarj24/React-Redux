@@ -46,7 +46,15 @@ class CoursesPage extends React.Component {
   };
 
   handleDeleteCourse = course => {
+    const { coursesPerPage, currentPage } = this.state;
+    const { courses } = this.props;
+
     toast.success('Course Deleted');
+
+    if ((currentPage - 1) * coursesPerPage >= courses.length - 1) {
+      this.handlePagination(currentPage - 1);
+    }
+
     this.props.action.deleteCourse(course).catch(error => {
       toast.error('Delete Failed.' + error.message, { autoClose: false });
     });

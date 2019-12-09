@@ -17,7 +17,6 @@ const CourseList = ({
   ) {
     courseList.push(courses[course]);
   }
-  console.log(courseList);
 
   return (
     <React.Fragment>
@@ -73,7 +72,9 @@ const CourseList = ({
 
 CourseList.propTypes = {
   courses: PropTypes.array.isRequired,
-  onDeleteClick: PropTypes.func.isRequired
+  onDeleteClick: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  coursesPerPage: PropTypes.number.isRequired
 };
 
 export default CourseList;
